@@ -31,6 +31,17 @@ class EmojiConverter:
         
         return processed_text
 
+    def convert_without_brackets(self, text):
+        """Replaces emojis in the input string with plain descriptions (no brackets)."""
+        if not text:
+            return ""
+
+        processed_text = text
+        for emoji_char, description in self.emoji_map.items():
+            processed_text = processed_text.replace(emoji_char, description+" ")
+        
+        return processed_text
+
     def get_count(self):
         """Returns the total number of loaded emoji mappings."""
         return len(self.emoji_map)

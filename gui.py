@@ -32,15 +32,7 @@ class EmojiConverterGUI:
         )
         title_label.pack(pady=(15, 2))
 
-        status_text = f"Loaded {self.converter.get_count()} emoji mappings"
-        status_label = tk.Label(
-            self.root, 
-            text=status_text, 
-            font=("Helvetica", 9, "italic"), 
-            bg=self.bg_color, 
-            fg="#666666"
-        )
-        status_label.pack(pady=(0, 10))
+
 
         # Input Section
         tk.Label(
@@ -101,6 +93,12 @@ class EmojiConverterGUI:
             padx=15, pady=5, relief="flat", cursor="hand2"
         ).grid(row=0, column=2, padx=5)
 
+        tk.Button(
+            btn_frame, text="Plain Convert", command=self.handle_convert_without_brackets, 
+            bg="#6b7280", fg="white", font=("Helvetica", 10, "bold"),
+            padx=15, pady=5, relief="flat", cursor="hand2"
+        ).grid(row=0, column=3, padx=5)
+
         # Output Section
         tk.Label(
             self.root, 
@@ -127,6 +125,17 @@ class EmojiConverterGUI:
             return
 
         converted_result = self.converter.convert(raw_text)
+
+        self.output_text.delete("1.0", tk.END)
+        self.output_text.insert(tk.END, converted_result)
+
+    def handle_convert_without_brackets(self):
+        raw_text = self.input_text.get("1.0", tk.END).strip()
+        if not raw_text:
+            messagebox.showwarning("Empty Input", "Please enter some text containing emojis first!")
+            return
+
+        converted_result = self.converter.convert_without_brackets(raw_text)
 
         self.output_text.delete("1.0", tk.END)
         self.output_text.insert(tk.END, converted_result)

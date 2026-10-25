@@ -19,5 +19,4 @@ def main():
     app = EmojiConverterGUI(root, converter)
     root.mainloop()
 
-if __name__ == "__main__":
-    main()
+main()
